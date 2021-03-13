@@ -21,6 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<swagger.version>2.9.2</swagger.version>
 	</properties>
 
 	<dependencies>
@@ -46,6 +47,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
 
 
 		<!-- Test dependencies -->
@@ -62,52 +73,38 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		<!--  	<plugin>
+			<!-- target/site/jacoco/index.html -->
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.9</version>
-				<configuration>
-				</configuration>
+				<version>0.8.6</version>
 				<executions>
 					<execution>
-						<id>default-prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>default-prepare-agent-integration</id>
-						<goals>
-							<goal>prepare-agent-integration</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>default-report</id>
-						<phase>verify</phase>
+						<id>jacoco-report</id>
+						<phase>test</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>default-report-integration</id>
-						<goals>
-							<goal>report-integration</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>default-check</id>
+						<id>jacoco-check</id>
 						<goals>
 							<goal>check</goal>
 						</goals>
 						<configuration>
 							<rules>
-								<rule implementation="org.jacoco.maven.RuleConfiguration">
+								<rule>
 									<element>BUNDLE</element>
 									<limits>
-										<limit implementation="org.jacoco.report.check.Limit">
-											<counter>COMPLEXITY</counter>
+										<limit>
+											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.60</minimum>
+											<minimum>0.6</minimum>
 										</limit>
 									</limits>
 								</rule>
@@ -115,28 +112,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin> -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<configuration>
-					<includes>
-						<include>**/*IT.java</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>failsafe-integration-tests</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-
-
 </project>

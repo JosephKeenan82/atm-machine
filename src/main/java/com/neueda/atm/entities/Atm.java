@@ -2,11 +2,14 @@ package com.neueda.atm.entities;
 
 import java.util.Map;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+/**
+ * 
+ * @author Joseph Keenan
+ *
+ */
 @Component
-@Scope("singleton")
 public class Atm {
 
 	private Map<String, Integer> notesRemaining;

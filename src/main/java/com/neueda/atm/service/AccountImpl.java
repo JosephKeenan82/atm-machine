@@ -13,6 +13,12 @@ import com.neueda.atm.interfaces.Accountservice;
 // The methods do not need to be @Transactional as we bet this out of the box
 // Delegating methods to Spring Data JPA
 // We do not need to explicitly create an EntityManager TODO: check this
+
+/**
+ * 
+ * @author Joseph Keenan
+ *
+ */
 @Service
 public class AccountImpl implements Accountservice {
 

@@ -6,6 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Joseph Keenan
+ *
+ */
 @Entity
 @Table(name = "account")
 public class Account {

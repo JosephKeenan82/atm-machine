@@ -4,6 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.neueda.atm.entities.Account;
 
+/**
+ * 
+ * @author Joseph Keenan
+ *
+ */
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
 }

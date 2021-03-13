@@ -1,5 +1,7 @@
 package com.neueda.atm.controllers;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -10,20 +12,26 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+//@formatter:off
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class AtmControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
 
 	@Test
-	public void getHello() throws Exception {
-		// @formatter:off
-		mvc.perform(MockMvcRequestBuilders.get("/accounts")
+	public void getCashFromAccount() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/cash")
+				.param("id", "1")
+				.param("pin", "1234")
+				.param("cash", "500")
 			.accept(MediaType.APPLICATION_JSON))
-			.andExpect(status().isOk());
-		//	.andExpect(content().string(equalTo(
-		//			"[{\"accountNumber\":\"123456789\",\"pin\":1234,\"openingBalance\":800.0,\"overdraft\":200},{\"accountNumber\":\"987654321\",\"pin\":4321,\"openingBalance\":1250.0,\"overdraft\":150}]")));
+			.andExpect(status().isOk())
+			.andExpect(content().string(
+					equalTo("Dispensing 500 from deposit 123456789")));
+		
+		
+		
 	}
 }

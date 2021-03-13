@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.neueda.atm.entities.Account;
 
+/**
+ * 
+ * @author Joseph Keenan
+ *
+ */
 public interface Accountservice {
 
 	List<Account> findAll();
