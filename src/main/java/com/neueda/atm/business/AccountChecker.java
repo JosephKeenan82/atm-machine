@@ -14,7 +14,7 @@ public class AccountChecker {
 	 * @param account
 	 * @return
 	 */
-	public int getTotalBalance(Account account) {
+	public int getTotalBalanceForAccount(Account account) {
 		return account.getOpeningBalance() + account.getOverdraft();
 	}
 

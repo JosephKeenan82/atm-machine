@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neueda.atm.business.AccountChecker;
+import com.neueda.atm.business.AtmChecker;
 import com.neueda.atm.entities.Account;
 import com.neueda.atm.entities.Atm;
 import com.neueda.atm.service.AccountImpl;
@@ -31,6 +32,8 @@ public class AtmController {
 	private Atm atm;
 
 	private AccountChecker accChecker = new AccountChecker();
+
+	private AtmChecker atmChecker = new AtmChecker();
 
 	@PostConstruct
 	private void setupData() {
@@ -54,7 +57,7 @@ public class AtmController {
 
 		Account account = accountImpl.findById(id);
 
-		if (account.getPin() == pin && accChecker.doesAccountHaveFunds(account, cashToDispense)
+		if (account.getPin() == pin && accChecker.getTotalBalanceForAccount(account) >= cashToDispense
 				&& atm.getCurrentBalance() >= cashToDispense) {
 			if (account.getOpeningBalance() >= cashToDispense) {
 				account.setOpeningBalance(account.getOpeningBalance() - cashToDispense);
@@ -64,16 +67,15 @@ public class AtmController {
 				account.setOverdraft(account.getOverdraft() - cashToDispense);
 				accountImpl.save(account);
 				return "Dispensing " + cashToDispense + " from overdraft " + account.getAccountNumber();
-			} else if (accChecker.getTotalBalance(account) >= cashToDispense) {
-				account.setOverdraft(account.getOverdraft() - cashToDispense);
-				account.setOverdraft(account.getOverdraft() - cashToDispense);
-				accountImpl.save(account);
-				return "Dispensing " + cashToDispense + " from deposit & overdraft " + account.getAccountNumber();
 			}
-
 		}
 		return "Not enough cash to withdraw " + cashToDispense + ", remainingbalance is "
-				+ accChecker.getTotalBalance(account);
+				+ accChecker.getTotalBalanceForAccount(account);
+	}
+
+	@GetMapping("/atmcash")
+	public int getCashInAtm() {
+		return atm.getCurrentBalance();
 	}
 
 }
