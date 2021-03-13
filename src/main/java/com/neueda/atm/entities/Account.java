@@ -1,13 +1,13 @@
 package com.neueda.atm.entities;
 
-public class User {
+public class Account {
 
 	private String accountNumber;
 	private int pin;
 	private double openingBalance;
 	private int overdraft;
 
-	public User(String accountNumber, int pin, double openingBalance, int overdraft) {
+	public Account(String accountNumber, int pin, double openingBalance, int overdraft) {
 		this.accountNumber = accountNumber;
 		this.pin = pin;
 		this.openingBalance = openingBalance;
