@@ -1,6 +1,0 @@
-com\neueda\atm\entities\User.class
-com\neueda\atm\Application.class
-com\neueda\atm\controllers\UserController.class
-com\neueda\atm\controllers\AtmController.class
-com\neueda\atm\entities\Atm.class
-com\neueda\atm\businesslogic\AtmLogic.class
