@@ -16,7 +16,7 @@ public class Application {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			System.out.println("System is starting and initialising default accounts");
+			System.out.println("System is starting, initialising default accounts");
 		};
 	}
 

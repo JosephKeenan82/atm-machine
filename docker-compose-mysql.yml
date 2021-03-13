@@ -1,0 +1,14 @@
+version: '3.6'
+
+services: 
+    db:
+        image: mysql
+        ports: 
+            - "3306:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: atm-machine
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root

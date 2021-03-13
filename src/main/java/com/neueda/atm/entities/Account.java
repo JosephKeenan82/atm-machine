@@ -1,24 +1,46 @@
 package com.neueda.atm.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "account")
 public class Account {
 
-	private String accountNumber;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private int accountNumber;
 	private int pin;
-	private double openingBalance;
+	private int openingBalance;
 	private int overdraft;
 
-	public Account(String accountNumber, int pin, double openingBalance, int overdraft) {
+	public Account() {
+	}
+
+	public Account(int accountNumber, int pin, int openingBalance, int overdraft) {
 		this.accountNumber = accountNumber;
 		this.pin = pin;
 		this.openingBalance = openingBalance;
 		this.overdraft = overdraft;
 	}
 
-	public String getAccountNumber() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
@@ -30,11 +52,11 @@ public class Account {
 		this.pin = pin;
 	}
 
-	public double getOpeningBalance() {
+	public int getOpeningBalance() {
 		return openingBalance;
 	}
 
-	public void setOpeningBalance(double openingBalance) {
+	public void setOpeningBalance(int openingBalance) {
 		this.openingBalance = openingBalance;
 	}
 
@@ -44,6 +66,12 @@ public class Account {
 
 	public void setOverdraft(int overdraft) {
 		this.overdraft = overdraft;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [accountNumber=" + accountNumber + ", pin=" + pin + ", openingBalance=" + openingBalance
+				+ ", overdraft=" + overdraft + "]";
 	}
 
 }
