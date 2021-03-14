@@ -1,6 +1,7 @@
 package com.neueda.atm.business;
 
-import com.neueda.atm.entities.Account;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * This class will be used to check if ATM has sufficient cash and determine
@@ -9,25 +10,21 @@ import com.neueda.atm.entities.Account;
  * @author Joseph Keenan
  *
  */
-public class AtmChecker {
+@Service
+public class ATMChecker {
 
-	/**
-	 * 
-	 * @param account
-	 * @return
-	 */
-	public int getTotalBalance(Account account) {
-		return account.getOpeningBalance() + account.getOverdraft();
+	@Autowired
+	private ATM atm;
+
+	public void updateBalance(int cashToWithdraw) {
+		atm.setCurrentBalance(atm.getCurrentBalance() - cashToWithdraw);
+
+		// TODO: change notes
+
 	}
 
-	/**
-	 * 
-	 * @param account
-	 * @param cashToDispense
-	 * @return
-	 */
-	public boolean doesAccountHaveFunds(Account account, int cashToDispense) {
-		return cashToDispense <= (account.getOpeningBalance() + account.getOverdraft());
+	public boolean canDispenseThisExactAmount(int cashToWithdraw) {
+		return cashToWithdraw % 5 == 0;
 	}
 
 }

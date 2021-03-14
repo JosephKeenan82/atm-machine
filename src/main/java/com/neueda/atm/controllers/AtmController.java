@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neueda.atm.business.AccountChecker;
-import com.neueda.atm.business.AtmChecker;
+import com.neueda.atm.business.ATM;
+import com.neueda.atm.business.ATMChecker;
 import com.neueda.atm.entities.Account;
-import com.neueda.atm.entities.Atm;
-import com.neueda.atm.service.AccountImpl;
 
 /**
  * 
@@ -23,23 +22,22 @@ import com.neueda.atm.service.AccountImpl;
  *
  */
 @RestController
-public class AtmController {
+public class ATMController {
 
 	@Autowired
-	private AccountImpl accountImpl;
+	private ATM atm;
 
 	@Autowired
-	private Atm atm;
+	private AccountChecker accChecker;
 
-	private AccountChecker accChecker = new AccountChecker();
-
-	private AtmChecker atmChecker = new AtmChecker();
+	@Autowired
+	private ATMChecker atmChecker;
 
 	@PostConstruct
 	private void setupData() {
 		atm.setCurrentBalance(1500);
 		Map<String, Integer> notes = Stream
-				.of(new Object[][] { { "Fifty", 10 }, { "Twenty", 30 }, { "Ten", 30 }, { "Five", 20 }, })
+				.of(new Object[][] { { "Fifty", 10 }, { "Twenty", 30 }, { "Ten", 30 }, { "Five", 20 } })
 				.collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 		atm.setNotesRemaining(notes);
 	}
@@ -53,29 +51,37 @@ public class AtmController {
 	 */
 	@GetMapping("/cash")
 	public String getCash(@RequestParam("id") int id, @RequestParam("pin") int pin,
-			@RequestParam("cash") int cashToDispense) {
+			@RequestParam("cash") int cashToWithdraw) {
+		Account account = accChecker.getAccont(id);
 
-		Account account = accountImpl.findById(id);
-
-		if (account.getPin() == pin && accChecker.getTotalBalanceForAccount(account) >= cashToDispense
-				&& atm.getCurrentBalance() >= cashToDispense) {
-			if (account.getOpeningBalance() >= cashToDispense) {
-				account.setOpeningBalance(account.getOpeningBalance() - cashToDispense);
-				accountImpl.save(account);
-				return "Dispensing " + cashToDispense + " from deposit " + account.getAccountNumber();
-			} else if (account.getOverdraft() >= cashToDispense) {
-				account.setOverdraft(account.getOverdraft() - cashToDispense);
-				accountImpl.save(account);
-				return "Dispensing " + cashToDispense + " from overdraft " + account.getAccountNumber();
-			}
+		if (account.getPin() != pin) {
+			return "Incorrect pin, please try again";
 		}
-		return "Not enough cash to withdraw " + cashToDispense + ", remainingbalance is "
+
+		if (atm.getCurrentBalance() < cashToWithdraw) {
+			return "Not enough cash in atm to dispense " + cashToWithdraw + ", atm currently has "
+					+ atm.getCurrentBalance();
+		}
+
+		// TODO
+		if (!atmChecker.canDispenseThisExactAmount(cashToWithdraw)) {
+			return "ATM cannot dispense this amount " + cashToWithdraw + ", please try again";
+		}
+
+		if (accChecker.getTotalBalanceForAccount(account) >= cashToWithdraw) {
+			accChecker.updateBalance(account, cashToWithdraw);
+			atmChecker.updateBalance(cashToWithdraw);
+			// TODO: add details of notes
+			return "Withdrawing " + cashToWithdraw + " from account " + account.getAccountNumber();
+		}
+
+		return "Not enough cash to withdraw " + cashToWithdraw + ", remaining balance is "
 				+ accChecker.getTotalBalanceForAccount(account);
 	}
 
 	@GetMapping("/atmcash")
-	public int getCashInAtm() {
-		return atm.getCurrentBalance();
+	public String getCashInAtm() {
+		return "ATM Balance is " + atm.getCurrentBalance();
 	}
 
 }

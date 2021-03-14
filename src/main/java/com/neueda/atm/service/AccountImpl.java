@@ -42,7 +42,7 @@ public class AccountImpl implements Accountservice {
 		if (result.isPresent()) {
 			theAccount = result.get();
 		} else {
-			// TODO: Create custom exception
+			// TODO: Create custom exception & TEST IT
 			throw new RuntimeException("Account " + id + " not found!");
 		}
 

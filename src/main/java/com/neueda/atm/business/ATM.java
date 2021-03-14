@@ -1,4 +1,4 @@
-package com.neueda.atm.entities;
+package com.neueda.atm.business;
 
 import java.util.Map;
 
@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class Atm {
+public class ATM {
 
 	private Map<String, Integer> notesRemaining;
 	private int currentBalance;
 
-	public Atm() {
+	public ATM() {
 	}
 
-	public Atm(Map<String, Integer> notesRemaining, int currentBalance) {
+	public ATM(Map<String, Integer> notesRemaining, int currentBalance) {
 		this.notesRemaining = notesRemaining;
 		this.currentBalance = currentBalance;
 	}

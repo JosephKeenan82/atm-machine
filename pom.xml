@@ -47,18 +47,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.5.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.5.2</version>
-		</dependency>
-
-
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -104,26 +92,12 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.6</minimum>
+											<minimum>0.8</minimum>
 										</limit>
 									</limits>
 								</rule>
 							</rules>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.springdoc</groupId>
-				<artifactId>springdoc-openapi-maven-plugin</artifactId>
-				<version>0.2</version>
-				<executions>
-					<execution>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>
