@@ -18,8 +18,9 @@ services:
     atm:
         image: atm-machine
         restart: always
+        build: .
         depends_on:
-            - db # start db before web
+            - db
         ports: 
             - "8080:8080"
         networks:

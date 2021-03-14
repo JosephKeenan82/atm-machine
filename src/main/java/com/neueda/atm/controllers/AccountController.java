@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neueda.atm.entities.Account;
+import com.neueda.atm.exception.IDNotFoundException;
 import com.neueda.atm.service.AccountImpl;
 
 /**
+ * TODO: Add create & delete for account and test it
  * 
  * @author Joseph Keenan
  *
@@ -43,22 +45,22 @@ public class AccountController {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws IDNotFoundException
 	 */
 	@GetMapping("/accounts/{id}")
-	public Account getAccountById(@PathVariable("id") Integer id) {
+	public Account getAccountById(@PathVariable("id") Integer id) throws IDNotFoundException {
 		return accountImpl.findById(id);
 	}
-
-	// - User (assume any rest client – curl, postman, browser) should be able to
-	// request a balance check along with maximum withdrawal amount (if any),
 
 	/**
 	 * 
 	 * @param id
 	 * @return
+	 * @throws IDNotFoundException
 	 */
 	@GetMapping("/balance")
-	public String getBalance(@RequestParam("id") Integer id, @RequestParam("pin") Integer pin) {
+	public String getBalance(@RequestParam("id") Integer id, @RequestParam("pin") Integer pin)
+			throws IDNotFoundException {
 		Account account = accountImpl.findById(id);
 
 		if (account.getPin() == pin) {

@@ -4,17 +4,24 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 //@formatter:off
 @SpringBootTest
+@Testcontainers
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.MethodName.class)
+@TestPropertySource(locations="classpath:test.properties")
 public class ATMControllerTest {
 
 	@Autowired
@@ -22,6 +29,7 @@ public class ATMControllerTest {
 	
 	@Test
 	public void getATMBalance() throws Exception {
+		
 		mvc.perform(
 				MockMvcRequestBuilders.get("/atmcash")
 			.accept(MediaType.APPLICATION_JSON))
@@ -31,7 +39,7 @@ public class ATMControllerTest {
 	}
 	
 	@Test
-	public void givenNotEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldNotBeWithrawn() throws Exception {
+	public void givenEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeWithrawn() throws Exception {
 		mvc.perform(
 				MockMvcRequestBuilders.get("/cash")
 				.param("id", "1")
@@ -44,7 +52,7 @@ public class ATMControllerTest {
 	}
 	
 	@Test
-	public void givenEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeWithrawn() throws Exception {
+	public void givenNotEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeNotWithrawn() throws Exception {
 		mvc.perform(
 				MockMvcRequestBuilders.get("/cash")
 				.param("id", "1")
@@ -92,6 +100,6 @@ public class ATMControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Not enough cash in atm to dispense 2000, atm currently has 600")));
+					equalTo("Not enough cash in atm to dispense 2000, atm currently has 1500")));
 	}
 }

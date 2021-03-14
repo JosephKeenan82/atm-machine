@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.neueda.atm.dao.AccountRepository;
 import com.neueda.atm.entities.Account;
+import com.neueda.atm.exception.IDNotFoundException;
 import com.neueda.atm.interfaces.Accountservice;
 
-// The methods do not need to be @Transactional as we bet this out of the box
+// The methods do not need to be @Transactional as we get this out of the box
 // Delegating methods to Spring Data JPA
-// We do not need to explicitly create an EntityManager TODO: check this
 
 /**
  * 
@@ -35,15 +35,14 @@ public class AccountImpl implements Accountservice {
 	}
 
 	@Override
-	public Account findById(int id) {
+	public Account findById(int id) throws IDNotFoundException {
 		Optional<Account> result = accountRepository.findById(id);
 
 		Account theAccount = null;
 		if (result.isPresent()) {
 			theAccount = result.get();
 		} else {
-			// TODO: Create custom exception & TEST IT
-			throw new RuntimeException("Account " + id + " not found!");
+			throw new IDNotFoundException("Account " + id + " not found!");
 		}
 
 		return theAccount;

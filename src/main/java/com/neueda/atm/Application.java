@@ -7,6 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * 
+ * @author Joseph Keenan
+ *
+ */
 @SpringBootApplication
 @EnableAutoConfiguration
 public class Application {
@@ -17,9 +22,7 @@ public class Application {
 
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
-			System.out.println("System is starting, initialising default accounts, & resetting ATM balance");
-		};
+		return args -> System.out.println("System is starting, initialising default accounts, & resetting ATM balance");
 	}
 
 }

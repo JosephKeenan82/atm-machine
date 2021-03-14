@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.neueda.atm.entities.Account;
+import com.neueda.atm.exception.IDNotFoundException;
 import com.neueda.atm.service.AccountImpl;
 
 /**
@@ -39,7 +40,7 @@ public class AccountChecker {
 	/**
 	 * 
 	 */
-	public void updateBalance(Account account, int cashToWithdraw) {
+	public void updateAccountBalance(Account account, int cashToWithdraw) {
 		int openingBalance = account.getOpeningBalance();
 
 		if (openingBalance >= cashToWithdraw) {
@@ -53,7 +54,7 @@ public class AccountChecker {
 		accountImpl.save(account);
 	}
 
-	public Account getAccont(int id) {
+	public Account getAccont(int id) throws IDNotFoundException {
 		return accountImpl.findById(id);
 	}
 

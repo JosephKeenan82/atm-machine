@@ -16,7 +16,7 @@ public class ATMChecker {
 	@Autowired
 	private ATM atm;
 
-	public void updateBalance(int cashToWithdraw) {
+	public void updateATMBalance(int cashToWithdraw) {
 		atm.setCurrentBalance(atm.getCurrentBalance() - cashToWithdraw);
 
 		// TODO: change notes

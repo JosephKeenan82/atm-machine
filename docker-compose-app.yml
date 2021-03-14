@@ -1,9 +1,0 @@
-version: '3.6'
-
-services: 
-            
-    atm:
-        image: atm-machine
-        restart: always
-        ports: 
-            - "8080:8080"
