@@ -24,14 +24,14 @@ public class AccountControllerTest {
 
 	@Test
 	public void getAccounts() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/accounts")
+		mvc.perform(MockMvcRequestBuilders.get("/account")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void getAccount() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/accounts/2")
+		mvc.perform(MockMvcRequestBuilders.get("/account/2")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(equalTo(
@@ -59,13 +59,39 @@ public class AccountControllerTest {
 			.andExpect(content().string(equalTo("Incorrect pin, please try again")));
 	}
 	
+	// save and then delete
 	@Test
-	public void givenBalanceRequest_whenIdNotFound_thenExceptionIsThrown() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/account")
-				.param("id", "111")
-				.param("pin", "1234")
-			.accept(MediaType.APPLICATION_JSON))
-			.andExpect(status().isNotFound());
+	public void createAccountUpdatePinAndDeleteAcount() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.post("/account")
+				.param("accountNumber", "1122334455")
+				.param("pin", "888")
+				.param("openingBalance", "1000")
+				.param("overdraft", "500")
+			.accept(MediaType.APPLICATION_JSON))			
+		.andExpect(status().isOk())
+		.andExpect(content().string(equalTo("New account id: 3")));
+		
+		mvc.perform(MockMvcRequestBuilders.get("/updatepin")
+				.param("id", "3")
+				.param("oldpin", "888")
+				.param("newpin", "999")
+				.accept(MediaType.APPLICATION_JSON))			
+			.andExpect(status().isOk())
+			.andExpect(content().string(equalTo("Updated pin successfully")));
+		
+		mvc.perform(MockMvcRequestBuilders.delete("/account")
+				.param("id", "3")
+				.accept(MediaType.APPLICATION_JSON))			
+			.andExpect(status().isOk())
+			.andExpect(content().string(equalTo("Deleted account id: 3")));
+	} 
+
+	@Test
+	public void countAccounts() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/countaccounts")
+			.accept(MediaType.APPLICATION_JSON))			
+		.andExpect(status().isOk())
+		.andExpect(content().string(equalTo("Number of accounts: 2")));
 	}
 	
 }

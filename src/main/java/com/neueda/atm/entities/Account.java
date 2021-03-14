@@ -37,16 +37,8 @@ public class Account {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getAccountNumber() {
 		return accountNumber;
-	}
-
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
 	}
 
 	public int getPin() {
@@ -71,12 +63,6 @@ public class Account {
 
 	public void setOverdraft(int overdraft) {
 		this.overdraft = overdraft;
-	}
-
-	@Override
-	public String toString() {
-		return "Account [accountNumber=" + accountNumber + ", pin=" + pin + ", openingBalance=" + openingBalance
-				+ ", overdraft=" + overdraft + "]";
 	}
 
 }

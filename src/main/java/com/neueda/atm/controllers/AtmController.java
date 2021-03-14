@@ -14,7 +14,6 @@ import com.neueda.atm.business.ATM;
 import com.neueda.atm.business.ATMChecker;
 import com.neueda.atm.business.AccountChecker;
 import com.neueda.atm.entities.Account;
-import com.neueda.atm.exception.IDNotFoundException;
 
 /**
  * 
@@ -56,7 +55,7 @@ public class ATMController {
 	 */
 	@GetMapping("/cash")
 	public String getCash(@RequestParam("id") int id, @RequestParam("pin") int pin,
-			@RequestParam("cash") int cashToWithdraw) throws IDNotFoundException {
+			@RequestParam("cash") int cashToWithdraw) {
 		Account account = accChecker.getAccont(id);
 
 		if (account.getPin() != pin) {

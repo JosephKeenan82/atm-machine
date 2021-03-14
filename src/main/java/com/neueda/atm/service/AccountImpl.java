@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.neueda.atm.dao.AccountRepository;
 import com.neueda.atm.entities.Account;
-import com.neueda.atm.exception.IDNotFoundException;
 import com.neueda.atm.interfaces.Accountservice;
 
 // The methods do not need to be @Transactional as we get this out of the box
@@ -35,14 +34,11 @@ public class AccountImpl implements Accountservice {
 	}
 
 	@Override
-	public Account findById(int id) throws IDNotFoundException {
+	public Account findById(int id) {
 		Optional<Account> result = accountRepository.findById(id);
-
 		Account theAccount = null;
 		if (result.isPresent()) {
 			theAccount = result.get();
-		} else {
-			throw new IDNotFoundException("Account " + id + " not found!");
 		}
 
 		return theAccount;
@@ -56,6 +52,10 @@ public class AccountImpl implements Accountservice {
 	@Override
 	public void deleteById(int id) {
 		accountRepository.deleteById(id);
+	}
+
+	public long countAccounts() {
+		return accountRepository.count();
 	}
 
 }

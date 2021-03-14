@@ -12,7 +12,7 @@ The application should receive the data, process the operations and then output 
 -	User should be able to request a withdrawal. If successful - 
 	details of the notes that would be dispensed along with remaining balance,
 -	If anything goes wrong, user should receive meaningful message, 
-	and there should be no changes in user’s account,
+	and there should be no changes in user’s account, -Done
 
 Assume application will be distributed as Docker image. Provide Dockerfile, but don’t waste too much time for building and testing docker image, focus on functionality. 
 Assume importance levels:
