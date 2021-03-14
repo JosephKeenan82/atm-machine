@@ -70,6 +70,7 @@ Statistics
 
 - Number of tests: 12
 - Code Coverage: > 90%
+- Sonarlint:
 
 -------------------------
 Swagger UI
@@ -96,7 +97,7 @@ For mvn clean install used jacoco code coverage plugin to ensure minimum % of co
 
 Test from the REST level to ensure outputs are as expected and consistent. Tests use test.properties to communicate with mysl container.
 
-Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). See .travis.yml for more information.
+Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github which triggers the build. Information for the build is obtained from .travis.yml.
 
 -------------------------
 Known Issues

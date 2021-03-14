@@ -1,23 +1,17 @@
--	should initialize with €1500 made up of 10 x €50s, 30 x €20s, 30 x €10s and 20 x €5s -DONE
--	should not dispense funds if the pin is incorrect, -DONE
--	cannot dispense more money than it holds, -DONE
--	cannot dispense more funds than customer have access to -DONE
--	should not expose the customer balance if the pin is incorrect, -DONE
+
 -	should only dispense the exact amounts requested,
 -	should dispense the minimum number of notes per withdrawal,
 
-The application should receive the data, process the operations and then output the results, it is responsible for validating customer account details and performing basic operations as described by API requirements:
--	User (assume any rest client – curl, postman, browser) should be able to 
-	request a balance check along with maximum withdrawal amount (if any), -DONE
 -	User should be able to request a withdrawal. If successful - 
 	details of the notes that would be dispensed along with remaining balance,
 -	If anything goes wrong, user should receive meaningful message, 
 	and there should be no changes in user’s account, -Done
 
-Assume application will be distributed as Docker image. Provide Dockerfile, but don’t waste too much time for building and testing docker image, focus on functionality. 
+Assume application will be distributed as Docker image. 
+Provide Dockerfile, but don’t waste too much time for building and testing docker image, focus on functionality. 
 Assume importance levels:
 S
 1 – Code working as described in requirements,
 2 – Application is building with simple javac, mvn install or gradle build command (or any basic build command working on behalf of programming language you choose),
-3 -  Unit tests are included. Coverage level depends on time you have left to complete the assignment, but we would like to see business logic (service layer) coverage at 60%,
+3 - Unit tests are included. Coverage level depends on time you have left to complete the assignment, but we would like to see business logic (service layer) coverage at 60%,
 4 – Other things you would like to implement for this project (ex. Database, application test coverage over 90%, API for gathering different statistics,  UI or whatever else you think would make your application extraordinary),
