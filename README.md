@@ -1,4 +1,4 @@
-# Neueda atm-machine
+# atm-machine
 Demo project for atm-machine
 
 ----------------------
@@ -82,7 +82,7 @@ Once application is running Swagger UI can be located at [http://localhost:8080/
 -------------------------
 To Query Database
 -------------------------
-winpty docker exec -it f30b630383fd mysql -uroot -p (password: root)
+winpty docker exec -it <image-id> mysql -uroot -p (password: root)
 
 **Note**: winpty is only necessary if running command from git bash)
 
@@ -93,14 +93,14 @@ Design Decisions
 
 Used [Spring Data JPA](https://spring.io/projects/spring-data-jpa) for database CRUD actions as this gives many benefits out-of-the-box such as less boilerplate code and less configuration. 
 
-For mvn clean install used jacoco code coverage plugin to ensure minimum % of code is covered and used docker-compose plugin to bring up mysql container for REST tests (uses docker-compose-mysql.yml).
+For **mvn clean install** I used jacoco code coverage plugin to ensure minimum % of code is covered and used docker-compose plugin to bring up mysql container for REST tests (uses docker-compose-mysql.yml).
 
-Test from the REST level to ensure outputs are as expected and consistent. Tests use test.properties to communicate with mysl container.
+Test from the REST level to ensure outputs are as expected and consistent. Tests use **test.properties** to communicate with mysl container.
 
-Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github which triggers the build. Information for the build is obtained from .travis.yml.
+Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github from travis-ci which triggers the build whenever code is committed. Information for the build is obtained from the simple **.travis.yml**.
 
 -------------------------
 Known Issues
 -------------------------
 
-- Sometimes when running docker-compose up the database container has not fully come up and causes exceptions in the command line but once a retry has occurred it should have stabilised.
+- Sometimes when running **docker-compose up** the database container has not fully come up and causes exceptions in the command line but once a retry has occurred it will stabilised.

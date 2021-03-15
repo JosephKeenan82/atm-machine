@@ -2,3 +2,13 @@ language: java
 jdk: openjdk8
   
 script: mvn clean install
+
+addons:
+  sonarcloud:
+    organization: "josephkeenan82"
+    token:
+      secure: "c21973dd6a8913992f6ef762688736aab0e9d6c3"
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=JosephKeenan82_atm-machine
