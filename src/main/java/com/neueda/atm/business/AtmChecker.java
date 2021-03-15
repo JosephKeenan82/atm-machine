@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ATMChecker {
+public class AtmChecker {
 
 	@Autowired
-	private ATM atm;
+	private Atm atm;
 
 	public void updateATMBalance(int cashToWithdraw) {
 		atm.setCurrentBalance(atm.getCurrentBalance() - cashToWithdraw);

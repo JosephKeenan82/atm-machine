@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.neueda.atm.business.ATM;
-import com.neueda.atm.business.ATMChecker;
+import com.neueda.atm.business.Atm;
+import com.neueda.atm.business.AtmChecker;
 import com.neueda.atm.business.AccountChecker;
 import com.neueda.atm.entities.Account;
 
@@ -21,16 +21,16 @@ import com.neueda.atm.entities.Account;
  *
  */
 @RestController
-public class ATMController {
+public class AtmController {
 
 	@Autowired
-	private ATM atm;
+	private Atm atm;
 
 	@Autowired
 	private AccountChecker accChecker;
 
 	@Autowired
-	private ATMChecker atmChecker;
+	private AtmChecker atmChecker;
 
 	@PostConstruct
 	private void setupData() {

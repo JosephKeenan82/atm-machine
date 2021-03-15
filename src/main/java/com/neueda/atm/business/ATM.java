@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class ATM {
+public class Atm {
 
 	private Map<String, Integer> notesRemaining;
 	private int currentBalance;
 
-	public ATM() {
+	public Atm() {
 	}
 
-	public ATM(Map<String, Integer> notesRemaining, int currentBalance) {
+	public Atm(Map<String, Integer> notesRemaining, int currentBalance) {
 		this.notesRemaining = notesRemaining;
 		this.currentBalance = currentBalance;
 	}
