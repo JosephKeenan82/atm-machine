@@ -26,6 +26,10 @@ This will do the following:
  - run mysql container
 
  - connect them on the same network (atm_network)
+ 
+ Application is ready the you can see the following in the logs: **System is starting, initialising default accounts, & resetting ATM balance**
+ 
+ You can also check if the system is up by using [localhost:8080/actuator/health](localhost:8080/actuator/health)
 
 ----------------------
 REST Examples
@@ -63,37 +67,6 @@ REST Examples
   
 [localhost:8080/cash?id=1&pin=123456&cash=100](localhost:8080/cash?id=1&pin=123456&cash=100)
 
-
--------------------------
-CI/CD
--------------------------
-
-Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github from travis-ci which triggers the build whenever code is committed. Information for the build is obtained from the simple **.travis.yml**.
-
-
--------------------------
-Statistics
--------------------------
-
-- Number of tests: 12
-- Code Coverage: 96.3%
-- Sonarlint violations: 0 
-
--------------------------
-Swagger UI
--------------------------
-
-Once application is running Swagger UI can be located at [http://localhost:8080/swagger-ui.html#](http://localhost:8080/swagger-ui.html#)
-
-
--------------------------
-To Query Database
--------------------------
-winpty docker exec -it <image-id> mysql -uroot -p (password: root)
-
-**Note**: winpty is only necessary if running command from git bash)
-
-
 -------------------------
 Design Decisions
 -------------------------
@@ -113,3 +86,34 @@ Known Issues
 - Sometimes when running **docker-compose up** the database container has not fully come up and causes exceptions in the command line but once a retry has occurred it will stabilised.
 
 - There may be some "problems" highlighted in the pom for docker-compose-maven-plugin & maven-antrun-plugin but these can be safely ignored - they do not interfere with the application.
+
+- mysql docker container created with **--initialize-insecure option**. This is not secure and not recommended for production but for a demo it is usfficient.
+
+
+-------------------------
+CI/CD
+-------------------------
+
+Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github from travis-ci which triggers the build whenever code is committed. Information for the build is obtained from the simple **.travis.yml**.
+
+-------------------------
+Swagger UI
+-------------------------
+
+Once application is running Swagger UI can be located at [http://localhost:8080/swagger-ui.html#](http://localhost:8080/swagger-ui.html#)
+
+
+-------------------------
+To Query Database
+-------------------------
+winpty docker exec -it <image-id> mysql -uroot -p (password: root)
+
+**Note**: winpty is only necessary if running command from git bash)
+
+-------------------------
+Statistics
+-------------------------
+
+- Number of tests: 12
+- Code Coverage: 96.9%
+- Sonarlint violations: 0 

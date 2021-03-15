@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +31,11 @@ public class AccountController {
 	@Autowired
 	AccountImpl accountImpl;
 
+	private Logger logger = LoggerFactory.getLogger(AccountController.class);
+
 	@PostConstruct
 	private void setupAccountData() {
+		logger.info("Initializing accounts");
 		accountImpl.save(new Account(123456789, 1234, 800, 200));
 		accountImpl.save(new Account(987654321, 4321, 1250, 150));
 	}
@@ -42,6 +47,7 @@ public class AccountController {
 	@ApiOperation(value = "Get accounts", notes = "This method returns all accounts")
 	@GetMapping("/account")
 	public List<Account> getAccounts() {
+		logger.info("Retreiving accounts");
 		return accountImpl.findAll();
 	}
 
@@ -55,6 +61,7 @@ public class AccountController {
 	@GetMapping("/account/{id}")
 	public Account getAccountById(
 			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @PathVariable("id") Integer id) {
+		logger.info("Retreiving account with id {}", id);
 		return accountImpl.findById(id);
 	}
 
@@ -70,7 +77,7 @@ public class AccountController {
 			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("id") Integer id,
 			@ApiParam(name = "pin", type = "int", value = "Account pin", required = true) @RequestParam("pin") Integer pin) {
 		Account account = accountImpl.findById(id);
-
+		logger.info("Retreiving balance for account with id {}", id);
 		if (account.getPin() == pin) {
 			return "Account balance is " + account.getOpeningBalance() + " with overdraft of " + account.getOverdraft()
 					+ ". Total withdrawal amount is " + (account.getOpeningBalance() + account.getOverdraft());
@@ -90,11 +97,13 @@ public class AccountController {
 	@ApiOperation(value = "Create an account", notes = "This method creates an account")
 	@PostMapping("/account")
 	public String createAccount(
-			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("accountNumber") Integer accountNumber,
+			@ApiParam(name = "accountNumber", type = "int", value = "account number", required = true) @RequestParam("accountNumber") Integer accountNumber,
 			@ApiParam(name = "pin", type = "int", value = "Account pin", required = true) @RequestParam("pin") Integer pin,
 			@ApiParam(name = "openingbalance", type = "int", value = "Account opening balance", required = true) @RequestParam("openingBalance") Integer openingBalance,
 			@ApiParam(name = "overdraft", type = "int", value = "Account overdraft", required = true) @RequestParam("overdraft") Integer overdraft) {
 		Account account = new Account(accountNumber, pin, openingBalance, overdraft);
+		logger.info("Creating account: accountNumber {}, pin {}, openingBalance {}, overdraft {}", accountNumber, pin,
+				openingBalance, overdraft);
 		accountImpl.save(account);
 		return "New account id: " + account.getId();
 	}
@@ -112,7 +121,7 @@ public class AccountController {
 			@ApiParam(name = "oldpin", type = "int", value = "Accounts current pin", required = true) @RequestParam("oldpin") Integer oldPin,
 			@ApiParam(name = "newpin", type = "int", value = "Account new pin", required = true) @RequestParam("newpin") Integer newPin) {
 		Account account = accountImpl.findById(id);
-
+		logger.info("Updating pin for account {}", id);
 		if (oldPin == account.getPin()) {
 			account.setPin(newPin);
 			accountImpl.save(account);
@@ -131,6 +140,7 @@ public class AccountController {
 	@DeleteMapping("/account")
 	public String deleteAccount(
 			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("id") Integer id) {
+		logger.info("Deleting account {}", id);
 		accountImpl.deleteById(id);
 		return "Deleted account id: " + id;
 	}
