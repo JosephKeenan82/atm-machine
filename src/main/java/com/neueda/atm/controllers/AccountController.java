@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 /**
+ * This is the controller class for {@link Account}
  * 
  * @author Joseph Keenan
  *
@@ -41,8 +42,9 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used to get all {@link Account}s
 	 * 
-	 * @return
+	 * @return list of accounts
 	 */
 	@ApiOperation(value = "Get accounts", notes = "This method returns all accounts")
 	@GetMapping("/account")
@@ -52,8 +54,9 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used to get an {@link Account} based on an id
 	 * 
-	 * @param id
+	 * @param id the id of the account
 	 * @return
 	 * @throws IDNotFoundException
 	 */
@@ -66,10 +69,11 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used to retrieve balance of an {@link Account} based on
+	 * an id
 	 * 
-	 * @param id
-	 * @return
-	 * @throws IDNotFoundException
+	 * @param id the id of the account
+	 * @return balance of the account
 	 */
 	@ApiOperation(value = "Get balance for an account", notes = "This method returns balance for account")
 	@GetMapping("/balance")
@@ -87,12 +91,13 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used to create an {@link Account}
 	 * 
-	 * @param accountNumber
-	 * @param pin
-	 * @param openingBalance
-	 * @param overdraft
-	 * @return
+	 * @param accountNumber  the account number of the account
+	 * @param pin            the pin of the account
+	 * @param openingBalance the openingBalance of the account
+	 * @param overdraft      the overdraft of the account
+	 * @return new id of the account
 	 */
 	@ApiOperation(value = "Create an account", notes = "This method creates an account")
 	@PostMapping("/account")
@@ -109,10 +114,12 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used to update an {@link Account} pin
 	 * 
-	 * @param id
-	 * @return
-	 * @throws IDNotFoundException
+	 * @param id     the id of the account
+	 * @param oldPin the old (current) pin of the account
+	 * @param newPin the new pin of the account
+	 * @return success message or message statin oldPin is incorrect
 	 */
 	@ApiOperation(value = "Update pin", notes = "Updates pin for an account")
 	@GetMapping("/updatepin")
@@ -132,9 +139,10 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used to delete an {@link Account}
 	 * 
-	 * @param id
-	 * @return
+	 * @param id the id of the account
+	 * @return message informing id account was deleted
 	 */
 	@ApiOperation(value = "Delete an account", notes = "This method deletes an account")
 	@DeleteMapping("/account")
@@ -146,9 +154,9 @@ public class AccountController {
 	}
 
 	/**
+	 * This REST endpoint is used get a count of {@link Account}s
 	 * 
-	 * @param id
-	 * @return
+	 * @return number of accounts
 	 */
 	@ApiOperation(value = "Count account", notes = "This method gets count of all accounts")
 	@GetMapping("/countaccounts")

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 /**
+ * This class is used to set data for ATM
  * 
  * @author Joseph Keenan
  *
@@ -16,7 +17,7 @@ public class Atm {
 	private int currentBalance;
 
 	public Atm() {
-
+		// not used
 	}
 
 	public Map<Integer, Integer> getNotesInAtm() {

@@ -45,7 +45,7 @@ public class AtmController {
 		atm.setCurrentBalance(1500);
 
 		Map<Integer, Integer> notes = new LinkedHashMap<>();// maintain order
-		notes.put(50, 10);
+		notes.put(50, 20);
 		notes.put(20, 30);
 		notes.put(10, 30);
 		notes.put(5, 20);
@@ -95,12 +95,4 @@ public class AtmController {
 		return "Not enough cash to withdraw " + cashToWithdraw + ", remaining balance is "
 				+ accChecker.getTotalBalanceForAccount(account);
 	}
-
-	@ApiOperation(value = "Get atm cash balance", notes = "This method gets the balance for the atm")
-	@GetMapping("/atmcash")
-	public String getCashInAtm() {
-		logger.info("ATM balance is amount {}", atm.getCurrentBalance());
-		return "ATM Balance is " + atm.getCurrentBalance();
-	}
-
 }

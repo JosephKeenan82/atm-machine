@@ -10,9 +10,6 @@ import com.neueda.atm.dao.AccountRepository;
 import com.neueda.atm.entities.Account;
 import com.neueda.atm.interfaces.Accountservice;
 
-// The methods do not need to be @Transactional as we get this out of the box
-// Delegating methods to Spring Data JPA
-
 /**
  * 
  * @author Joseph Keenan

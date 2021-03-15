@@ -34,7 +34,10 @@ This will do the following:
 ----------------------
 REST Examples
 ----------------------
- 
+ ```
+Note: Postman JSON file located in project root
+```
+
   -  Get all accounts: 
   
 [localhost:8080/account](localhost:8080/account)
@@ -79,15 +82,17 @@ Tested from the REST level to ensure outputs are as expected and consistent. Tes
 
 Did not add Atm class to mysql database as there is only one of these and it can be held in memory.
 
+I chose not to javadoc entities or Swagger classes but other classes have javadocs.
+
 -------------------------
 Known Issues
 -------------------------
 
-- Sometimes when running **docker-compose up** the database container has not fully come up and causes exceptions in the command line but once a retry has occurred it will stabilised.
+- Sometimes when running **docker-compose up** the database container has not fully come up and causes exceptions in the command line but once a retry has occurred it will have stabilized.
 
 - There may be some "problems" highlighted in the pom for docker-compose-maven-plugin & maven-antrun-plugin but these can be safely ignored - they do not interfere with the application.
 
-- mysql docker container created with **--initialize-insecure option**. This is not secure and not recommended for production but for a demo it is usfficient.
+- mysql docker container created with **--initialize-insecure option**. This is not secure and not recommended for production but for a demo it is sufficient.
 
 
 -------------------------
@@ -114,6 +119,6 @@ winpty docker exec -it <image-id> mysql -uroot -p (password: root)
 Statistics
 -------------------------
 
-- Number of tests: 12
-- Code Coverage: 96.9%
-- Sonarlint violations: 0 
+- Number of RESTtests: 14
+- Code Coverage: > 90%
+- Sonarlint violations: 0

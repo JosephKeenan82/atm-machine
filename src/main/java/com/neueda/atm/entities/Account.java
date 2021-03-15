@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * This is the entity class for accounts
  * 
  * @author Joseph Keenan
  *

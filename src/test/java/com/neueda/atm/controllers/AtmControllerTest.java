@@ -28,16 +28,6 @@ public class AtmControllerTest {
 	private MockMvc mvc;
 	
 	@Test
-	public void getATMBalance() throws Exception {
-		mvc.perform(
-				MockMvcRequestBuilders.get("/atmcash")
-			.accept(MediaType.APPLICATION_JSON))
-			.andExpect(status().isOk())
-			.andExpect(content().string(
-					equalTo("ATM Balance is 1500")));
-	}
-	
-	@Test
 	public void givenEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeWithrawn() throws Exception {
 		mvc.perform(
 				MockMvcRequestBuilders.get("/cash")
@@ -47,7 +37,46 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Withdrawing 735 from account 123456789 using {50=10, 20=11, 10=1, 5=1}")));
+					equalTo("Withdrawing 735 from account 123456789 using {50=14, 20=1, 10=1, 5=1}")));
+	}
+	
+	@Test
+	public void givenEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeWithrawn_2() throws Exception {
+		mvc.perform(
+				MockMvcRequestBuilders.get("/cash")
+				.param("id", "1")
+				.param("pin", "1234")
+				.param("cash", "20")
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().string(
+					equalTo("Withdrawing 20 from account 123456789 using {20=1}")));
+	}
+	
+	@Test
+	public void givenEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeWithrawn_3() throws Exception {
+		mvc.perform(
+				MockMvcRequestBuilders.get("/cash")
+				.param("id", "1")
+				.param("pin", "1234")
+				.param("cash", "15")
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().string(
+					equalTo("Withdrawing 15 from account 123456789 using {10=1, 5=1}")));
+	}
+	
+	@Test
+	public void givenEnoughCashInAccount_whenAccountRequestFunds_thenFundsShouldBeWithrawn_4() throws Exception {
+		mvc.perform(
+				MockMvcRequestBuilders.get("/cash")
+				.param("id", "1")
+				.param("pin", "1234")
+				.param("cash", "65")
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().string(
+					equalTo("Withdrawing 65 from account 123456789 using {50=1, 10=1, 5=1}")));
 	}
 	
 	@Test
@@ -60,7 +89,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Not enough cash to withdraw 500, remaining balance is 265")));
+					equalTo("Not enough cash to withdraw 500, remaining balance is 165")));
 	}
 	
 	@Test

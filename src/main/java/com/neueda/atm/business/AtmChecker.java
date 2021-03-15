@@ -2,6 +2,7 @@ package com.neueda.atm.business;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 import com.neueda.atm.entities.Atm;
 
 /**
- * This class will be used to check if ATM has sufficient cash and determine
- * lowest number of notes to dispense
+ * This class will be used to check if {@link Atm} has sufficient cash and
+ * determine lowest number of notes to dispense
  * 
- * @author Joseph Keenan TODO: Update javadocs
+ * @author Joseph Keenan
  */
 @Service
 public class AtmChecker {
@@ -24,36 +25,41 @@ public class AtmChecker {
 
 	private Logger logger = LoggerFactory.getLogger(AtmChecker.class);
 
-	private int value = 0;
-
+	/**
+	 * This method will check if the {@link Atm} can diwpense this amount
+	 * 
+	 * @param cashToWithdraw the amount to withdraw
+	 * @return true or false
+	 */
 	public boolean canDispenseThisExactAmount(int cashToWithdraw) {
 		logger.info("Checking if atm can dispense amount {}", cashToWithdraw);
 		return cashToWithdraw % 5 == 0;
 	}
 
+	/**
+	 * This method will update {@link Atm} balance and return minimum number of
+	 * notes to satisfy the withdrawal
+	 * 
+	 * @param cashToWithdraw the amount to withdraw
+	 * @return map of number of notes and denominations
+	 */
 	public Map<Integer, Integer> updateATMBalanceAndGetNotesToDispense(int cashToWithdraw) {
 		Map<Integer, Integer> notesToDispense = new LinkedHashMap<>();
 		Map<Integer, Integer> notesInAtm = atm.getNotesInAtm();
+		int count = 0;
 
-		notesInAtm.forEach((k, v) -> {
+		Set<Integer> keySet = notesInAtm.keySet();
+		Object[] array = keySet.toArray();
 
-			for (int i = 0; i < v; i++) {
-				// If the amount to withdraw is less than the current value then move to next
-				if (cashToWithdraw < k) {
-					break;
-				}
+		for (int i = 0; i < notesInAtm.size(); i++) {
+			count = cashToWithdraw / (Integer) array[i];
+			cashToWithdraw = cashToWithdraw % (Integer) array[i]; // finding the remaining amount
 
-				if (value < cashToWithdraw) {
-					value += k;// add this amount to the current value to be withdrawn
-					updateMaps(notesToDispense, notesInAtm, k);
-				}
-
-				// This is a tidy up block
-				if (value > cashToWithdraw) {
-					tidyUp(notesToDispense, notesInAtm, k);
-				}
+			if (count != 0) {
+				notesToDispense.put((Integer) array[i], count);
+				notesInAtm.put((Integer) array[i], count);
 			}
-		});
+		}
 
 		// update atm
 		logger.info("Updating note in atm to {}", notesInAtm);
@@ -66,25 +72,4 @@ public class AtmChecker {
 
 	}
 
-	private void updateMaps(Map<Integer, Integer> notesToDispense, Map<Integer, Integer> notesInAtm, Integer k) {
-		// Create mapping for notes withdrawn and update note in atm
-		if (!notesToDispense.containsKey(k)) {
-			notesToDispense.put(k, 1);
-			notesInAtm.put(k, notesInAtm.get(k) - 1);
-		} else {
-			notesToDispense.put(k, notesToDispense.get(k) + 1);
-			notesInAtm.put(k, notesInAtm.get(k) - 1);
-		}
-	}
-
-	private void tidyUp(Map<Integer, Integer> notesToDispense, Map<Integer, Integer> notesInAtm, Integer k) {
-		value -= k;
-		notesToDispense.put(k, notesToDispense.get(k) - 1);
-
-		if (notesToDispense.get(k) == 0) {
-			notesToDispense.remove(k);
-		}
-
-		notesInAtm.put(k, notesInAtm.get(k) + 1);
-	}
 }
