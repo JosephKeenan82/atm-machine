@@ -37,7 +37,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Withdrawing 735 from account 123456789 using {50=14, 20=1, 10=1, 5=1}")));
+					equalTo("Withdrawing 735 from account 123456789 using {50=14, 20=1, 10=1, 5=1}, remaining balance is 265")));
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Withdrawing 20 from account 123456789 using {20=1}")));
+					equalTo("Withdrawing 20 from account 123456789 using {20=1}, remaining balance is 245")));
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Withdrawing 15 from account 123456789 using {10=1, 5=1}")));
+					equalTo("Withdrawing 15 from account 123456789 using {10=1, 5=1}, remaining balance is 230")));
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Withdrawing 65 from account 123456789 using {50=1, 10=1, 5=1}")));
+					equalTo("Withdrawing 65 from account 123456789 using {50=1, 10=1, 5=1}, remaining balance is 165")));
 	}
 	
 	@Test

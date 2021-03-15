@@ -89,7 +89,7 @@ public class AtmController {
 			accChecker.updateAccountBalance(account, cashToWithdraw);
 			Map<Integer, Integer> notesDispensed = atmChecker.updateATMBalanceAndGetNotesToDispense(cashToWithdraw);
 			return "Withdrawing " + cashToWithdraw + " from account " + account.getAccountNumber() + " using "
-					+ notesDispensed;
+					+ notesDispensed + ", remaining balance is " + accChecker.getTotalBalanceForAccount(account);
 		}
 
 		return "Not enough cash to withdraw " + cashToWithdraw + ", remaining balance is "

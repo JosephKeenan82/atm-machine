@@ -7,6 +7,7 @@ Build
 ```
 mvn clean install
 ```
+During the build Spring Boot REST tests will run. A mysql container will spin up as specified in pom.xml and once tests have run it will be torn down.
 
 ----------------------
 Run App
