@@ -22,7 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @TestPropertySource(locations="classpath:test.properties")
-public class ATMControllerTest {
+public class AtmControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
