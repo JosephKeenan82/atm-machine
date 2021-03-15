@@ -1,6 +1,6 @@
 package com.neueda.atm.controllers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +14,9 @@ import com.neueda.atm.business.AccountChecker;
 import com.neueda.atm.business.AtmChecker;
 import com.neueda.atm.entities.Account;
 import com.neueda.atm.entities.Atm;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 
@@ -33,16 +36,16 @@ public class AtmController {
 	private AtmChecker atmChecker;
 
 	@PostConstruct
-	private void setupData() {
+	private void setupAtmData() {
 		atm.setCurrentBalance(1500);
 
-		Map<String, Integer> notes = new HashMap<>();
-		notes.put("Fifty", 10);
-		notes.put("Twenty", 30);
-		notes.put("Ten", 30);
-		notes.put("Five", 20);
+		Map<Integer, Integer> notes = new LinkedHashMap<>();// maintain order
+		notes.put(50, 10);
+		notes.put(20, 30);
+		notes.put(10, 30);
+		notes.put(5, 20);
 
-		atm.setNotesRemaining(notes);
+		atm.setNotesInAtm(notes);
 	}
 
 	/**
@@ -53,9 +56,12 @@ public class AtmController {
 	 * @return
 	 * @throws IDNotFoundException
 	 */
+	@ApiOperation(value = "Get cash", notes = "This method withdraws cash for an acocunt")
 	@GetMapping("/cash")
-	public String getCash(@RequestParam("id") int id, @RequestParam("pin") int pin,
-			@RequestParam("cash") int cashToWithdraw) {
+	public String getCash(
+			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("id") Integer id,
+			@ApiParam(name = "pin", type = "int", value = "Accounts current pin", required = true) @RequestParam("pin") Integer pin,
+			@ApiParam(name = "cash", type = "int", value = "Cash to withdraw", required = true) @RequestParam("cash") Integer cashToWithdraw) {
 		Account account = accChecker.getAccont(id);
 
 		if (account.getPin() != pin) {
@@ -68,20 +74,21 @@ public class AtmController {
 		}
 
 		if (!atmChecker.canDispenseThisExactAmount(cashToWithdraw)) {
-			return "ATM cannot dispense this amount " + cashToWithdraw + ", please try again";
+			return "ATM cannot dispense this amount " + cashToWithdraw + ", please try again in multiple of fives";
 		}
 
 		if (accChecker.getTotalBalanceForAccount(account) >= cashToWithdraw) {
 			accChecker.updateAccountBalance(account, cashToWithdraw);
-			atmChecker.updateATMBalance(cashToWithdraw);
-			// TODO: add details of notes
-			return "Withdrawing " + cashToWithdraw + " from account " + account.getAccountNumber();
+			Map<Integer, Integer> notesDispensed = atmChecker.updateATMBalanceAndGetNotesToDispense(cashToWithdraw);
+			return "Withdrawing " + cashToWithdraw + " from account " + account.getAccountNumber() + " using "
+					+ notesDispensed;
 		}
 
 		return "Not enough cash to withdraw " + cashToWithdraw + ", remaining balance is "
 				+ accChecker.getTotalBalanceForAccount(account);
 	}
 
+	@ApiOperation(value = "Get atm cash balance", notes = "This method gets the balance for the atm")
 	@GetMapping("/atmcash")
 	public String getCashInAtm() {
 		return "ATM Balance is " + atm.getCurrentBalance();

@@ -19,14 +19,13 @@ docker-compose up
 
 This will do the following:
 
- - create mysql database
-
  - create atm-machine image
 
  - run atm container
  
  - run mysql container
 
+ - connect them on the same network (atm_network)
 
 ----------------------
 REST Examples
@@ -71,15 +70,14 @@ CI/CD
 
 Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github from travis-ci which triggers the build whenever code is committed. Information for the build is obtained from the simple **.travis.yml**.
 
-A build is then triggered on [sonarcloud.io](sonarcloud.io)
 
 -------------------------
 Statistics
 -------------------------
 
 - Number of tests: 12
-- Code Coverage: > 90%
-- Sonarlint:
+- Code Coverage: 96.3%
+- Sonarlint violations: 0 
 
 -------------------------
 Swagger UI
@@ -104,10 +102,14 @@ Used [Spring Data JPA](https://spring.io/projects/spring-data-jpa) for database 
 
 For **mvn clean install** I used jacoco code coverage plugin to ensure minimum % of code is covered and used docker-compose plugin to bring up mysql container for REST tests (uses docker-compose-mysql.yml).
 
-Test from the REST level to ensure outputs are as expected and consistent. Tests use **test.properties** to communicate with mysl container.
+Tested from the REST level to ensure outputs are as expected and consistent. Tests use **test.properties** to communicate with mysl container. Code coverage then ensure that lines and branches are reached by these tests.
+
+Did not add Atm class to mysql database as there is only one of these and it can be held in memory.
 
 -------------------------
 Known Issues
 -------------------------
 
 - Sometimes when running **docker-compose up** the database container has not fully come up and causes exceptions in the command line but once a retry has occurred it will stabilised.
+
+- There may be some "problems" highlighted in the pom for docker-compose-maven-plugin & maven-antrun-plugin but these can be safely ignored - they do not interfere with the application.

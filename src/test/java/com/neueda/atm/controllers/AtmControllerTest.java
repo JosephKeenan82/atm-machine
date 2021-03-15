@@ -29,7 +29,6 @@ public class AtmControllerTest {
 	
 	@Test
 	public void getATMBalance() throws Exception {
-		
 		mvc.perform(
 				MockMvcRequestBuilders.get("/atmcash")
 			.accept(MediaType.APPLICATION_JSON))
@@ -44,11 +43,11 @@ public class AtmControllerTest {
 				MockMvcRequestBuilders.get("/cash")
 				.param("id", "1")
 				.param("pin", "1234")
-				.param("cash", "900")
+				.param("cash", "735")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Withdrawing 900 from account 123456789")));
+					equalTo("Withdrawing 735 from account 123456789 using {50=10, 20=11, 10=1, 5=1}")));
 	}
 	
 	@Test
@@ -61,7 +60,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("Not enough cash to withdraw 500, remaining balance is 100")));
+					equalTo("Not enough cash to withdraw 500, remaining balance is 265")));
 	}
 	
 	@Test
@@ -87,7 +86,7 @@ public class AtmControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().string(
-					equalTo("ATM cannot dispense this amount 72, please try again")));
+					equalTo("ATM cannot dispense this amount 72, please try again in multiple of fives")));
 	}
 	
 	@Test

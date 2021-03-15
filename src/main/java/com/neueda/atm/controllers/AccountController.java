@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.neueda.atm.entities.Account;
 import com.neueda.atm.service.AccountImpl;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 /**
- * TODO: Add create & delete for account and test it
  * 
  * @author Joseph Keenan
  *
@@ -28,7 +30,7 @@ public class AccountController {
 	AccountImpl accountImpl;
 
 	@PostConstruct
-	private void setupData() {
+	private void setupAccountData() {
 		accountImpl.save(new Account(123456789, 1234, 800, 200));
 		accountImpl.save(new Account(987654321, 4321, 1250, 150));
 	}
@@ -37,6 +39,7 @@ public class AccountController {
 	 * 
 	 * @return
 	 */
+	@ApiOperation(value = "Get accounts", notes = "This method returns all accounts")
 	@GetMapping("/account")
 	public List<Account> getAccounts() {
 		return accountImpl.findAll();
@@ -48,8 +51,10 @@ public class AccountController {
 	 * @return
 	 * @throws IDNotFoundException
 	 */
+	@ApiOperation(value = "Get an account", notes = "This method returns an account based on id")
 	@GetMapping("/account/{id}")
-	public Account getAccountById(@PathVariable("id") Integer id) {
+	public Account getAccountById(
+			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @PathVariable("id") Integer id) {
 		return accountImpl.findById(id);
 	}
 
@@ -59,8 +64,11 @@ public class AccountController {
 	 * @return
 	 * @throws IDNotFoundException
 	 */
+	@ApiOperation(value = "Get balance for an account", notes = "This method returns balance for account")
 	@GetMapping("/balance")
-	public String getBalance(@RequestParam("id") Integer id, @RequestParam("pin") Integer pin) {
+	public String getBalance(
+			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("id") Integer id,
+			@ApiParam(name = "pin", type = "int", value = "Account pin", required = true) @RequestParam("pin") Integer pin) {
 		Account account = accountImpl.findById(id);
 
 		if (account.getPin() == pin) {
@@ -79,9 +87,13 @@ public class AccountController {
 	 * @param overdraft
 	 * @return
 	 */
+	@ApiOperation(value = "Create an account", notes = "This method creates an account")
 	@PostMapping("/account")
-	public String createAccount(@RequestParam("accountNumber") Integer accountNumber, @RequestParam("pin") Integer pin,
-			@RequestParam("openingBalance") Integer openingBalance, @RequestParam("overdraft") Integer overdraft) {
+	public String createAccount(
+			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("accountNumber") Integer accountNumber,
+			@ApiParam(name = "pin", type = "int", value = "Account pin", required = true) @RequestParam("pin") Integer pin,
+			@ApiParam(name = "openingbalance", type = "int", value = "Account opening balance", required = true) @RequestParam("openingBalance") Integer openingBalance,
+			@ApiParam(name = "overdraft", type = "int", value = "Account overdraft", required = true) @RequestParam("overdraft") Integer overdraft) {
 		Account account = new Account(accountNumber, pin, openingBalance, overdraft);
 		accountImpl.save(account);
 		return "New account id: " + account.getId();
@@ -93,9 +105,12 @@ public class AccountController {
 	 * @return
 	 * @throws IDNotFoundException
 	 */
+	@ApiOperation(value = "Update pin", notes = "Updates pin for an account")
 	@GetMapping("/updatepin")
-	public String updatePin(@RequestParam("id") Integer id, @RequestParam("oldpin") Integer oldPin,
-			@RequestParam("newpin") Integer newPin) {
+	public String updatePin(
+			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("id") Integer id,
+			@ApiParam(name = "oldpin", type = "int", value = "Accounts current pin", required = true) @RequestParam("oldpin") Integer oldPin,
+			@ApiParam(name = "newpin", type = "int", value = "Account new pin", required = true) @RequestParam("newpin") Integer newPin) {
 		Account account = accountImpl.findById(id);
 
 		if (oldPin == account.getPin()) {
@@ -112,8 +127,10 @@ public class AccountController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Delete an account", notes = "This method deletes an account")
 	@DeleteMapping("/account")
-	public String createAccount(@RequestParam("id") Integer id) {
+	public String deleteAccount(
+			@ApiParam(name = "id", type = "int", value = "Account id", required = true) @RequestParam("id") Integer id) {
 		accountImpl.deleteById(id);
 		return "Deleted account id: " + id;
 	}
@@ -123,6 +140,7 @@ public class AccountController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Count account", notes = "This method gets count of all accounts")
 	@GetMapping("/countaccounts")
 	public String getCountOfAccounts() {
 		return "Number of accounts: " + accountImpl.countAccounts();

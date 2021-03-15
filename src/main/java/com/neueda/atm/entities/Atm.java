@@ -12,24 +12,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class Atm {
 
-	private Map<String, Integer> notesRemaining;
+	private Map<Integer, Integer> notesInAtm;
 	private int currentBalance;
 
 	public Atm() {
 
 	}
 
-	public Atm(Map<String, Integer> notesRemaining, int currentBalance) {
-		this.notesRemaining = notesRemaining;
-		this.currentBalance = currentBalance;
+	public Map<Integer, Integer> getNotesInAtm() {
+		return notesInAtm;
 	}
 
-	public Map<String, Integer> getNotesRemaining() {
-		return notesRemaining;
-	}
-
-	public void setNotesRemaining(Map<String, Integer> notesRemaining) {
-		this.notesRemaining = notesRemaining;
+	public void setNotesInAtm(Map<Integer, Integer> notesInAtm) {
+		this.notesInAtm = notesInAtm;
 	}
 
 	public int getCurrentBalance() {
