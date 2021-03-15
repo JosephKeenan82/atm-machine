@@ -1,4 +1,4 @@
-package com.neueda.atm.business;
+package com.neueda.atm.entities;
 
 import java.util.Map;
 
@@ -16,6 +16,7 @@ public class Atm {
 	private int currentBalance;
 
 	public Atm() {
+
 	}
 
 	public Atm(Map<String, Integer> notesRemaining, int currentBalance) {

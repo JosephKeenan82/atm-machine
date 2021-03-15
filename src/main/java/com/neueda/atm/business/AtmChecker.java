@@ -3,6 +3,8 @@ package com.neueda.atm.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.neueda.atm.entities.Atm;
+
 /**
  * This class will be used to check if ATM has sufficient cash and determine
  * lowest number of notes to dispense
