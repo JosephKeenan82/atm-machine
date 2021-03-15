@@ -102,4 +102,26 @@ public class AtmControllerTest {
 			.andExpect(content().string(
 					equalTo("Not enough cash in atm to dispense 2000, atm currently has 1500")));
 	}
+	
+	@Test
+	public void balanceRequest_whenPinIsCorrect_thenReturnBalance() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/balance")
+				.param("id", "1")
+				.param("pin", "1234")
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().string(equalTo(
+				"Account balance is 800 with overdraft of 200. Total withdrawal amount is 1000")));
+	}
+	
+	@Test
+	public void balanceRequest_whenPinIsInCorrect_thenDoNotReturnBalance() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/balance")
+				.param("id", "1")
+				.param("pin", "123456")
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(content().string(equalTo("Incorrect pin, please try again")));
+	}
+	
 }
