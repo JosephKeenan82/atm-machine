@@ -64,6 +64,15 @@ REST Examples
   
 [localhost:8080/cash?id=1&pin=123456&cash=100](localhost:8080/cash?id=1&pin=123456&cash=100)
 
+
+-------------------------
+CI/CD
+-------------------------
+
+Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github from travis-ci which triggers the build whenever code is committed. Information for the build is obtained from the simple **.travis.yml**.
+
+A build is then triggered on [sonarcloud.io](sonarcloud.io)
+
 -------------------------
 Statistics
 -------------------------
@@ -96,8 +105,6 @@ Used [Spring Data JPA](https://spring.io/projects/spring-data-jpa) for database 
 For **mvn clean install** I used jacoco code coverage plugin to ensure minimum % of code is covered and used docker-compose plugin to bring up mysql container for REST tests (uses docker-compose-mysql.yml).
 
 Test from the REST level to ensure outputs are as expected and consistent. Tests use **test.properties** to communicate with mysl container.
-
-Once a commit has occurred a build is triggered in [travis-ci.com](travis-ci.com). A hook is added to github from travis-ci which triggers the build whenever code is committed. Information for the build is obtained from the simple **.travis.yml**.
 
 -------------------------
 Known Issues
