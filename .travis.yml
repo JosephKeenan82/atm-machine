@@ -3,15 +3,18 @@ jdk: openjdk8
   
 script: 
   - mvn clean install
-  # setup JDK 11 for sonar scan
-  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && . ./install-jdk.sh -F 11 -L GPL
+  
+ ### sonarcloud integration
+ 
+  # # setup JDK 11 for sonar scan
+  # - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && . ./install-jdk.sh -F 11 -L GPL
 
-addons:
-  sonarcloud:
-    organization: "josephkeenan82"
-    token:
-      secure: "PEG904b4Etoi+hD0DJo/Lm5t2cjUYiWKvfzy2k6ntvIahPfSxzB4LUvpBk93ttoHuAvoiYEZ0dAmyunBzS1ZIG2Mf9JUYd418trfViS8VdMj4UiZl/HHV01cAXxekfq5Pl4PuSsA2u4ZVJI/jAbSLJ3dMwtbPwbApSILWhuSdLo1trd1AURa4gBL2aeOaOjSSPYWMRm6/Bq7XG8w5MdB2pCnVX7s9I5p7ojTU7n0M1MsmSHMtXeyRLO/vOTC+j/At2LRBc5P7C36E966Dxiy5kpzs1fzs7i+XCKyFl1GThsiN2atzGk8qQlBLK2fVjvgmdZpN7G8QboOiCfcb7Y2WGKi+0z13qiwAC4DX6raHGD68Y9LO932loVI8uALXc912c0YhGrAHD3VCN1l32Lokfue3TlSMRubvRxD2KUKljj3uHnZVUYsBvJtxr8tcLijkNnD1B81u2+Y1kBnGtUfnNHko8g5guTwpskZQpzAHVP9ImCsXPcvDqjw2q7Jp+3uUuLQgA23j5jJiPKU0W6puGkHwosfO4rAwTKCNX6Tkh5agtjvDftc/BcS9jD7UWuCmEQ9SChQd1Xp+rhCrCsPJITYsXvX6lV1DgtZf4Wtf+nd1Xums01qnj3BmGoGHYAIf6LuNmn2wDZQwcRBIWk9XSS6RZ8GSSuaOeuU26pNQAQ="
+# addons:
+  # sonarcloud:
+    # organization: "josephkeenan82"
+    # token:
+      # secure: "PEG904b4Etoi+hD0DJo/Lm5t2cjUYiWKvfzy2k6ntvIahPfSxzB4LUvpBk93ttoHuAvoiYEZ0dAmyunBzS1ZIG2Mf9JUYd418trfViS8VdMj4UiZl/HHV01cAXxekfq5Pl4PuSsA2u4ZVJI/jAbSLJ3dMwtbPwbApSILWhuSdLo1trd1AURa4gBL2aeOaOjSSPYWMRm6/Bq7XG8w5MdB2pCnVX7s9I5p7ojTU7n0M1MsmSHMtXeyRLO/vOTC+j/At2LRBc5P7C36E966Dxiy5kpzs1fzs7i+XCKyFl1GThsiN2atzGk8qQlBLK2fVjvgmdZpN7G8QboOiCfcb7Y2WGKi+0z13qiwAC4DX6raHGD68Y9LO932loVI8uALXc912c0YhGrAHD3VCN1l32Lokfue3TlSMRubvRxD2KUKljj3uHnZVUYsBvJtxr8tcLijkNnD1B81u2+Y1kBnGtUfnNHko8g5guTwpskZQpzAHVP9ImCsXPcvDqjw2q7Jp+3uUuLQgA23j5jJiPKU0W6puGkHwosfO4rAwTKCNX6Tkh5agtjvDftc/BcS9jD7UWuCmEQ9SChQd1Xp+rhCrCsPJITYsXvX6lV1DgtZf4Wtf+nd1Xums01qnj3BmGoGHYAIf6LuNmn2wDZQwcRBIWk9XSS6RZ8GSSuaOeuU26pNQAQ="
 
-script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=JosephKeenan82_atm-machine
+# script:
+  # # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=JosephKeenan82_atm-machine
