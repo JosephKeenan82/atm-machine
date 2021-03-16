@@ -51,10 +51,6 @@ Note: Postman JSON file located in project root
   
 [localhost:8080/balance?id=1&pin=1234](localhost:8080/balance?id=1&pin=1234)
 
-  -  Get account balance: 
-  
-[localhost:8080/balance?id=1&pin=123](localhost:8080/balance?id=1&pin=123)
-
   -  Withdraw cash: 
   
 [localhost:8080/cash?id=1&pin=1234&cash=190](localhost:8080/cash?id=1&pin=1234&cash=190)
