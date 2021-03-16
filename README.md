@@ -2,7 +2,7 @@
 Demo project for atm-machine
 
 ----------------------
-Build
+Build App
 ----------------------
 ```
 mvn clean install
@@ -58,10 +58,6 @@ Note: Postman JSON file located in project root
   -  Withdraw cash: 
   
 [localhost:8080/cash?id=1&pin=1234&cash=190](localhost:8080/cash?id=1&pin=1234&cash=190)
-
-  -  Check ATM balance: 
-  
-[localhost:8080/atmcash](localhost:8080/atmcash)
 		
   -  Exceed max ATM amount: 
   
@@ -114,7 +110,7 @@ To Query Database
 -------------------------
 winpty docker exec -it <image-id> mysql -uroot -p (password: root)
 
-**Note**: winpty is only necessary if running command from git bash)
+**Note**: winpty is only necessary if running command from git bash
 
 -------------------------
 Statistics
