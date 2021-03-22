@@ -1,0 +1,9 @@
+com.demo.atm
+com.demo.atm.business
+com.demo.atm.controllers
+com.demo.atm.dao
+com.demo.atm.entities
+com.demo.atm.interfaces
+com.demo.atm.service
+com.demo.atm.swagger
+com.neueda.atm.controllers
